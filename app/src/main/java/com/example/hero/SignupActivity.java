@@ -1,18 +1,29 @@
 package com.example.hero;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +32,7 @@ import ernestoyaquello.com.verticalstepperform.VerticalStepperFormView;
 import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener;
 
 public class SignupActivity extends AppCompatActivity implements StepperFormListener {
+    private String TAG = "SIGNUP";
 
     private NameStep firstName;
     private NameStep middleName;
@@ -28,6 +40,9 @@ public class SignupActivity extends AppCompatActivity implements StepperFormList
     private DateStep birthDay;
     private PasswordStep password;
     private EmailStep email;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @BindView(R.id.stepper_form)
     VerticalStepperFormView verticalStepperFormView;
@@ -40,6 +55,8 @@ public class SignupActivity extends AppCompatActivity implements StepperFormList
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
 
+        mAuth = FirebaseAuth.getInstance();
+
         firstName = new NameStep("First Name");
         middleName = new NameStep("Middle Name");
         lastName = new NameStep("Last Name");
@@ -50,7 +67,7 @@ public class SignupActivity extends AppCompatActivity implements StepperFormList
         // Find the form view, set it up and initialize it.
         verticalStepperFormView = findViewById(R.id.stepper_form);
         verticalStepperFormView
-                .setup(this, lastName, firstName, middleName, birthDay, password, email)
+                .setup(this, lastName, firstName, middleName, birthDay, email, password)
                 .displayStepButtons(true)
                 .displayBottomNavigation(true)
                 .displayStepDataInSubtitleOfClosedSteps(true)
@@ -64,12 +81,46 @@ public class SignupActivity extends AppCompatActivity implements StepperFormList
         // form in an attempt to save or send the data.
 
 
-     /**
-        DITO KAPATID YUNG SIGNUP!
+        mAuth.createUserWithEmailAndPassword(email.getStepDataAsHumanReadableString(), password.getStepDataAsHumanReadableString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
 
-        */
+                            String uid = user.getUid();
+                            String fn = firstName.getStepDataAsHumanReadableString();
+                            String mn = middleName.getStepDataAsHumanReadableString();
+                            String ln = lastName.getStepDataAsHumanReadableString();
+                            String bd = birthDay.getStepDataAsHumanReadableString();
+                            String em = email.getStepDataAsHumanReadableString();
 
-        super.onBackPressed();
+                            storeDB(uid, ln, fn, mn, bd, em);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(SignupActivity.this,
+                                    task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void storeDB(String uid, String lastName, String firstName, String middleName, String birthDay, String email) {
+        User user = new User(lastName, firstName, middleName, birthDay, email);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("Users").child(uid).setValue(user);
+
+        updateUI();
+    }
+
+    private void updateUI() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -109,7 +160,7 @@ public class SignupActivity extends AppCompatActivity implements StepperFormList
             middleName.restoreStepData(middleNameHolder);
         }
 
-        if(savedInstanceState.containsKey("year") && savedInstanceState.containsKey("month") && savedInstanceState.containsKey("date")) {
+        if (savedInstanceState.containsKey("year") && savedInstanceState.containsKey("month") && savedInstanceState.containsKey("date")) {
             int year = savedInstanceState.getInt("year");
             int month = savedInstanceState.getInt("month");
             int date = savedInstanceState.getInt("date");
@@ -297,7 +348,7 @@ class PasswordStep extends Step<String> {
         // However, we return "(Empty)" if the text is empty to avoid not having any text to display.
         // This string will be displayed in the subtitle of the step whenever the step gets closed.
         String password = getStepData();
-       // return !password.isEmpty() ? password : "(Empty)";
+        // return !password.isEmpty() ? password : "(Empty)";
         return "(Secured)";
     }
 
@@ -518,7 +569,7 @@ class DateStep extends Step<DateStep.DateHolder> {
 
     @Override
     public String getStepDataAsHumanReadableString() {
-        return month + " / " + date + " / " + year;
+        return month + "/" + date + "/" + year;
     }
 
     @Override
@@ -552,5 +603,25 @@ class DateStep extends Step<DateStep.DateHolder> {
             this.month = month;
             this.date = date;
         }
+    }
+}
+
+class User {
+    public String lastName;
+    public String firstName;
+    public String middleName;
+    public String birthDay;
+    public String email;
+
+    public User() {
+
+    }
+
+    public User(String lastName, String firstName, String middleName, String birthDay, String email) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.birthDay = birthDay;
+        this.email = email;
     }
 }
