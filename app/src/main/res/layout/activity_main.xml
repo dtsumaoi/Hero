@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txt_signin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:qb_backgroundColor="@color/colorPrimaryDark"
+        app:qb_backgroundColor="@color/colorPrimary"
         app:qb_radius="100" />
 
     <TextView
