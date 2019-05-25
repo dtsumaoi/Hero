@@ -34,11 +34,11 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/btn_signup"
-        android:textColor="@color/colorBackground"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/txt_signin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/colorBackground"
         app:qb_backgroundColor="@color/colorPrimary"
         app:qb_radius="100" />
 
