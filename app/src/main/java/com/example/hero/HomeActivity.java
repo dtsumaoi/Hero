@@ -13,6 +13,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -20,14 +23,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.TextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+//    @BindView(R.id.txt_name)
+//    TextView txtName;
+//
+//    @BindView(R.id.txt_email)
+//    TextView txtEmail;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+//        ButterKnife.bind(this);
+//
+//        mAuth = FirebaseAuth.getInstance();
+//        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+
+//        String uid = mAuth.getUid();
+//        String firstName = mDatabase.child(uid).child;
+//        String lastName;
+//
+//        txtName.setText(mD);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -87,15 +114,13 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_home) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_profile) {
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_alerts) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout) {
 
         }
 
