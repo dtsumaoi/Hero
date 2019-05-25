@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">HERO</string>
-    <string name="app_description">Applying internationally has never been this easier!</string>
     <string name="app_version">v1.0</string>
+
+    <string name="desc_app">Applying internationally has never been this easier!</string>
+    <string name="desc_logo">App Logo</string>
+
+    <string name="btn_signup">Get Started</string>
+    <string name="btn_signin">Existing Account? Sign in.</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
