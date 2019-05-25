@@ -42,4 +42,7 @@ dependencies {
 
     //FORM
     implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:2.2.0'
+
+    //UI
+    implementation 'com.diegodobelo.expandingview:expanding-view:0.9.4'
 }

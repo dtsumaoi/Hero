@@ -80,7 +80,6 @@ public class SignupActivity extends AppCompatActivity implements StepperFormList
         // This method will be called when the user clicks on the last confirmation button of the
         // form in an attempt to save or send the data.
 
-
         mAuth.createUserWithEmailAndPassword(email.getStepDataAsHumanReadableString(), password.getStepDataAsHumanReadableString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -97,6 +96,8 @@ public class SignupActivity extends AppCompatActivity implements StepperFormList
                             String bd = birthDay.getStepDataAsHumanReadableString();
                             String em = email.getStepDataAsHumanReadableString();
 
+                            System.out.println("TANGINAMO LO ");
+
                             storeDB(uid, ln, fn, mn, bd, em);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -110,7 +111,10 @@ public class SignupActivity extends AppCompatActivity implements StepperFormList
     }
 
     public void storeDB(String uid, String lastName, String firstName, String middleName, String birthDay, String email) {
+
         User user = new User(lastName, firstName, middleName, birthDay, email);
+
+        System.out.println("TANGINAMO LO " + user);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Users").child(uid).setValue(user);
@@ -606,22 +610,3 @@ class DateStep extends Step<DateStep.DateHolder> {
     }
 }
 
-class User {
-    public String lastName;
-    public String firstName;
-    public String middleName;
-    public String birthDay;
-    public String email;
-
-    public User() {
-
-    }
-
-    public User(String lastName, String firstName, String middleName, String birthDay, String email) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.birthDay = birthDay;
-        this.email = email;
-    }
-}
