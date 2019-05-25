@@ -39,9 +39,6 @@ public class HomeActivity extends AppCompatActivity
 
     private final String TAG = "HOME";
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
@@ -64,7 +61,7 @@ public class HomeActivity extends AppCompatActivity
         txtName = navigationView.getHeaderView(0).findViewById(R.id.txt_name);
         txtEmail = navigationView.getHeaderView(0).findViewById(R.id.txt_email);
 
-        DatabaseReference mReferenceUser = mDatabase.getReference("Users/" + mAuth.getUid());
+        DatabaseReference mReferenceUser = mDatabase.getReference("Users/Profile/" + mAuth.getUid());
 
         // Read from the database
         mReferenceUser.addValueEventListener(new ValueEventListener() {
@@ -89,13 +86,6 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -119,9 +109,10 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it
+        // is present.
         getMenuInflater().inflate(R.menu.home, menu);
-        return true;
+        return false;
     }
 
     @Override

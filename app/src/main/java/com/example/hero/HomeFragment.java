@@ -1,6 +1,7 @@
 package com.example.hero;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,6 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ramotion.foldingcell.FoldingCell;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +33,12 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    @BindView(R.id.folding_cell)
+    FoldingCell fc;
+
+    private View view;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,6 +76,22 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, view);
+
+        // attach click listener to folding cell
+        fc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fc.toggle(false);
+            }
+        });
+
+        // set custom parameters
+        fc.initialize(1000, Color.DKGRAY, 2);
+// or with camera height parameter
+        fc.initialize(30, 1000, Color.DKGRAY, 2);
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
