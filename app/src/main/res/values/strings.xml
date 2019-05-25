@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Hero</string>
+    <string name="app_name">HERO</string>
+    <string name="app_description">Applying internationally has never been this easier!</string>
+    <string name="app_version">v1.0</string>
 </resources>
