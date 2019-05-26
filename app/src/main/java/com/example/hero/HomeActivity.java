@@ -136,14 +136,13 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-        } else if (id == R.id.nav_home) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PreferenceFragment()).commit();
         } else if (id == R.id.nav_preference) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PreferenceFragment()).commit();
         } else if (id == R.id.nav_alerts) {
 
         } else if (id == R.id.nav_logout) {
             mAuth.signOut();
+            finish();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

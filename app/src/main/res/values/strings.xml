@@ -25,11 +25,9 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_profile">Profile</string>
+    <string name="menu_preferences">Preferences</string>
     <string name="menu_alerts">Job Alerts</string>
     <string name="menu_logout">Logout</string>
-
-
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

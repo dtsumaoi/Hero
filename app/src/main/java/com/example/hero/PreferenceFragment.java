@@ -4,12 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import ernestoyaquello.com.verticalstepperform.VerticalStepperFormView;
+import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,11 +30,20 @@ import butterknife.ButterKnife;
  * Use the {@link PreferenceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PreferenceFragment extends Fragment {
+public class PreferenceFragment extends Fragment implements StepperFormListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "PREFERENCE";
+
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mDatabase;
+
+    private Preference preference;
+
+    @BindView(R.id.preference_form)
+    VerticalStepperFormView preferenceFormView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -31,6 +51,9 @@ public class PreferenceFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private JobStep job;
+    private NameStep location;
+    private MobileNumberStep salary;
     private View view;
 
     public PreferenceFragment() {
@@ -71,6 +94,27 @@ public class PreferenceFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_preference, container, false);
         ButterKnife.bind(this, view);
 
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
+
+        DatabaseReference mReferenceUser = mDatabase.getReference("Users/" + mAuth.getUid() + "/Profile/Preference/");
+
+
+        job = new JobStep("Job");
+        location = new NameStep("Location");
+        salary = new MobileNumberStep("Salary");
+
+
+        // Find the form view, set it up and initialize it.
+        preferenceFormView = getView().findViewById(R.id.preference_form);
+        preferenceFormView
+                .setup(this, job, location, salary)
+                .displayStepButtons(true)
+                .displayBottomNavigation(true)
+                .displayStepDataInSubtitleOfClosedSteps(true)
+                .displayCancelButtonInLastStep(true)
+                .init();
+
         return view;
     }
 
@@ -96,6 +140,16 @@ public class PreferenceFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onCompletedForm() {
+
+    }
+
+    @Override
+    public void onCancelledForm() {
+
     }
 
     /**

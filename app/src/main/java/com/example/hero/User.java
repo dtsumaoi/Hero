@@ -7,6 +7,7 @@ class User {
     public String birthDay;
     public String mobileNumber;
     public String email;
+    public Preference preference;
 
 
     public User() {
@@ -21,4 +22,9 @@ class User {
         this.mobileNumber = mobileNumber;
         this.email = email;
     }
+
+    public User(Preference preference) {
+        this.preference = preference;
+    }
 }
+

@@ -43,4 +43,7 @@ dependencies {
     //FORM
     implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:2.2.0'
     implementation 'com.github.joielechong:countrycodepicker:2.3.0'
+
+    //SPINNER
+    implementation 'com.github.arcadefire:nice-spinner:1.4.3'
 }
