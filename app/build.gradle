@@ -43,8 +43,4 @@ dependencies {
     //FORM
     implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:2.2.0'
     implementation 'com.github.joielechong:countrycodepicker:2.3.0'
-
-    //UI
-    implementation 'com.diegodobelo.expandingview:expanding-view:0.9.4'
-    implementation 'com.ramotion.foldingcell:folding-cell:1.2.2'
 }

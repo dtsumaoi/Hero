@@ -1,7 +1,6 @@
 package com.example.hero;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,18 +9,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
+ * {@link PreferenceFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link PreferenceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class PreferenceFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,11 +29,11 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private View view;
-
     private OnFragmentInteractionListener mListener;
 
-    public HomeFragment() {
+    private View view;
+
+    public PreferenceFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +43,11 @@ public class HomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment PreferenceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static PreferenceFragment newInstance(String param1, String param2) {
+        PreferenceFragment fragment = new PreferenceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,10 +67,10 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        view = inflater.inflate(R.layout.fragment_preference, container, false);
         ButterKnife.bind(this, view);
 
-        // Inflate the layout for this fragment
         return view;
     }
 

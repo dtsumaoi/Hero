@@ -3,18 +3,10 @@ package com.example.hero;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,11 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.rilixtech.CountryCodePicker;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ernestoyaquello.com.verticalstepperform.Step;
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormView;
 import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener;
 
@@ -120,7 +110,7 @@ public class SignupActivity extends AppCompatActivity implements StepperFormList
         User user = new User(lastName, firstName, middleName, birthDay, ccode + mobileNumber, email);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("Users").child("Profile").child(uid).setValue(user);
+        mDatabase.child("Users").child(uid).child("Profile").setValue(user);
 
         updateUI();
     }

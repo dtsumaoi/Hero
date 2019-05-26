@@ -3,10 +3,7 @@ package com.example.hero;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -35,7 +32,8 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        HomeFragment.OnFragmentInteractionListener {
+        HomeFragment.OnFragmentInteractionListener,
+        PreferenceFragment.OnFragmentInteractionListener {
 
     private final String TAG = "HOME";
 
@@ -61,7 +59,7 @@ public class HomeActivity extends AppCompatActivity
         txtName = navigationView.getHeaderView(0).findViewById(R.id.txt_name);
         txtEmail = navigationView.getHeaderView(0).findViewById(R.id.txt_email);
 
-        DatabaseReference mReferenceUser = mDatabase.getReference("Users/Profile/" + mAuth.getUid());
+        DatabaseReference mReferenceUser = mDatabase.getReference("Users/" + mAuth.getUid() + "/Profile/");
 
         // Read from the database
         mReferenceUser.addValueEventListener(new ValueEventListener() {
@@ -72,7 +70,7 @@ public class HomeActivity extends AppCompatActivity
 
                 user = dataSnapshot.getValue(User.class);
 
-                txtName.setText(user.firstName + " " +user.lastName);
+                txtName.setText(user.firstName + " " + user.lastName);
                 txtEmail.setText(user.email);
             }
 
@@ -139,13 +137,13 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
         } else if (id == R.id.nav_home) {
-
-        } else if (id == R.id.nav_profile) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PreferenceFragment()).commit();
+        } else if (id == R.id.nav_preference) {
 
         } else if (id == R.id.nav_alerts) {
 
         } else if (id == R.id.nav_logout) {
-
+            mAuth.signOut();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
