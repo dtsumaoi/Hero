@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+                // whenever data at this country is updated.
 
                 user = dataSnapshot.getValue(User.class);
 
